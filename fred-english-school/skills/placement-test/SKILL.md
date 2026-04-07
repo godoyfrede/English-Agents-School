@@ -5,9 +5,7 @@ description: >
   (A1 a C2). Cobre as três habilidades: conversação, escrita e vocabulário/leitura.
   Use este skill quando: o aluno é novo na escola, quer refazer o nivelamento, ou usa
   termos como "prova inicial", "teste de nível", "placement test", "qual é meu nível".
-tools:
-  - Read
-  - Write
+version: 0.1.0
 ---
 
 # Placement Test — Fred English School

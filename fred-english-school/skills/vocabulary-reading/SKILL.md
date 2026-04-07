@@ -7,9 +7,7 @@ description: >
   Use este skill quando: o aluno quer aprender vocabulário novo, praticar leitura,
   expandir repertório em inglês, ou usa termos como "vocabulary", "vocabulário",
   "reading", "leitura", "aprender palavras", "ler em inglês", "texto em inglês".
-tools:
-  - Read
-  - Write
+version: 0.1.0
 ---
 
 # Vocabulary & Reading — Fred English School

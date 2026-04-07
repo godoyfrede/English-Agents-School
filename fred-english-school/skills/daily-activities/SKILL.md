@@ -8,11 +8,7 @@ description: >
   para consumir em inglês, ou usa termos como "para-casa", "homework", "atividades",
   "o que assistir em inglês", "podcast de inglês", "série para aprender inglês",
   "daily activities", "conteúdo em inglês", "aprender no dia a dia", "o que ler hoje".
-tools:
-  - Read
-  - Write
-  - WebSearch
-  - WebFetch
+version: 0.1.0
 ---
 
 # Daily Activities — Fred English School

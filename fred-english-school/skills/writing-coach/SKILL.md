@@ -7,9 +7,7 @@ description: >
   Use este skill quando: o aluno quer praticar escrita, receber correção, melhorar
   gramática na escrita, ou usa termos como "writing", "escrita", "escrever em inglês",
   "corrigir meu texto", "praticar escrita", "writing practice", "coach de escrita".
-tools:
-  - Read
-  - Write
+version: 0.1.0
 ---
 
 # Writing Coach — Fred English School

@@ -5,9 +5,7 @@ description: >
   do aluno. Compara com provas anteriores e o Supervisor decide sobre avanço de nível.
   Use este skill quando: o aluno quer fazer a prova mensal, verificar se avançou de nível,
   ou usa termos como "prova mensal", "progress test", "avaliação mensal", "quero ser avaliado".
-tools:
-  - Read
-  - Write
+version: 0.1.0
 ---
 
 # Progress Test — Fred English School

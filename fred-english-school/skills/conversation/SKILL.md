@@ -6,9 +6,7 @@ description: >
   Use este skill quando: o aluno quer praticar falar inglês, fazer role-play, simular
   situações reais, ou usa termos como "conversar", "speaking", "praticar fala", "role-play",
   "quero falar inglês", "conversation practice".
-tools:
-  - Read
-  - Write
+version: 0.1.0
 ---
 
 # Conversation Practice — Fred English School
