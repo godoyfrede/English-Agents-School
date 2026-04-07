@@ -1,0 +1,9 @@
+{
+  "name": "fred-english-school",
+  "version": "0.1.0",
+  "description": "Time de agentes IA para aprendizado de inglês personalizado com metodologia CLT, níveis CEFR e acompanhamento contínuo de progresso.",
+  "author": {
+    "name": "Fred"
+  },
+  "keywords": ["english", "learning", "cefr", "clt", "education", "language"]
+}

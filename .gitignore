@@ -1,0 +1,9 @@
+# Local Claude Code settings
+.claude/
+
+# Plugin binary artifact (built from source in fred-english-school/)
+*.plugin
+
+# OS
+.DS_Store
+Thumbs.db
