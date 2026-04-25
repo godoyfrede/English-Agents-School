@@ -7,23 +7,29 @@
 
 ---
 
-## O Problema
+## A Origem
 
-Aprender inglês é difícil não por falta de conteúdo — há infinitos cursos, apps e vídeos disponíveis. O problema é outro: **falta de personalização, continuidade e acompanhamento real**.
+Este projeto nasceu de uma insatisfação pessoal — e de uma crença.
 
-A maioria das ferramentas trata todos os alunos da mesma forma. Não lembram o que você aprendeu na semana passada. Não sabem que você já domina o passado simples mas ainda erra o present perfect. Não percebem que você evoluiu o suficiente para avançar de nível. Não te cobram quando você some por duas semanas.
+A insatisfação: **o inglês decoreba não funciona**. Apps, cursos e métodos tradicionais ensinam a língua como uma lista de regras a memorizar. Vocabulário para decorar. Gramática para copiar. Exercícios desconectados da vida real. O aluno termina sabendo *sobre* o inglês — mas não consegue *usar* o inglês.
 
-O resultado? Alunos que ficam presos no mesmo nível por meses, sem saber por quê — e sem saber o que fazer diferente.
+Isso não é um problema de falta de esforço. É um problema de metodologia.
+
+A crença: **a IA pode entregar uma experiência de aprendizado que nenhuma ferramenta convencional consegue** — não porque é mais inteligente, mas porque é infinitamente paciente, completamente adaptável e radicalmente pessoal. Ela não tem um currículo fixo para cumprir. Ela parte de onde você está, fala do jeito que você entende, e evolui com você.
+
+E a segunda crença, talvez a mais importante: **esse tipo de ferramenta não deveria ser privada**. O acesso a uma educação de qualidade é um problema global. Se é possível construir um sistema assim com IA, ele deve ser aberto — para que qualquer pessoa, em qualquer lugar, com qualquer modelo de linguagem disponível, possa usá-lo.
 
 ---
 
 ## A Solução
 
-**English Agents School** é um time de agentes de IA que funciona como uma escola de inglês personalizada e inteligente.
+**English Agents School** é um time de agentes de IA construído sobre uma metodologia real — CLT (Communicative Language Teaching) — que coloca o uso da língua no centro, não a memorização.
 
-Não é um app. Não é um chatbot único. É um **sistema multi-agente** onde cada agente tem um papel específico — e todos trabalham juntos para criar uma experiência de aprendizado que evolui com você.
+Não é um app. Não é um chatbot único. É um **sistema multi-agente** onde cada agente tem um papel específico — e todos trabalham juntos para criar uma experiência de aprendizado que se adapta ao seu nível, lembra da sua evolução e te desafia a crescer.
 
-A ideia central: **a IA não substitui o professor — ela se torna o professor, o supervisor e o diretor ao mesmo tempo**, com memória real do seu progresso e critérios objetivos para decidir quando você avança de nível.
+A ideia central: **usar a IA não como substituto de professor, mas como a estrutura que faltava** — um sistema que tem método, tem memória, tem critério de progressão e te encontra onde você está. Tudo isso sem precisar pagar por uma escola, um professor particular ou um app de assinatura.
+
+Este projeto tem dois propósitos simultâneos: **aprender inglês de verdade** e **ser livre para a humanidade** — publicado como especificação open source para que qualquer pessoa possa usar, adaptar e construir em cima dele, com qualquer modelo de linguagem.
 
 ---
 
