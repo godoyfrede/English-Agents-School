@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/godoyfrede/English-Agents-School/open-source/schemas/progress.schema.json",
+  "title": "StudentProgress",
+  "description": "Schema for tracking a student's English learning progress across all skills and assessments",
+  "type": "object",
+  "required": ["student", "current_level"],
+  "properties": {
+    "student": {
+      "type": "string",
+      "description": "Student's name"
+    },
+    "current_level": {
+      "type": ["string", "null"],
+      "enum": ["A1", "A2", "B1", "B2", "C1", "C2", null],
+      "description": "Current CEFR level. Null if placement test not yet completed."
+    },
+    "placement_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Date of initial placement test (ISO 8601)"
+    },
+    "last_progress_test": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Date of most recent monthly progress test"
+    },
+    "next_progress_test": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Scheduled date for next monthly progress test"
+    },
+    "scores": {
+      "type": "object",
+      "properties": {
+        "placement": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["date", "total"],
+              "properties": {
+                "date": { "type": "string", "format": "date" },
+                "total": { "type": "number", "minimum": 0, "maximum": 100 },
+                "vocabulary_comprehension": { "type": "number", "minimum": 0, "maximum": 30 },
+                "writing": { "type": "number", "minimum": 0, "maximum": 40 },
+                "conversation": { "type": "number", "minimum": 0, "maximum": 30 }
+              }
+            }
+          ]
+        },
+        "progress_tests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["date", "level_tested", "score", "decision"],
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "level_tested": {
+                "type": "string",
+                "enum": ["A1", "A2", "B1", "B2", "C1", "C2"]
+              },
+              "score": { "type": "number", "minimum": 0, "maximum": 100 },
+              "vocabulary_grammar": { "type": "number", "minimum": 0, "maximum": 30 },
+              "writing": { "type": "number", "minimum": 0, "maximum": 30 },
+              "conversation": { "type": "number", "minimum": 0, "maximum": 40 },
+              "decision": {
+                "type": "string",
+                "enum": ["advance", "maintain", "review", "regress"],
+                "description": "Level decision made by Supervisor after this test"
+              }
+            }
+          }
+        }
+      }
+    },
+    "skill_sessions": {
+      "type": "object",
+      "properties": {
+        "conversation": { "$ref": "#/definitions/skillStats" },
+        "writing": { "$ref": "#/definitions/skillStats" },
+        "vocabulary_reading": { "$ref": "#/definitions/skillStats" }
+      }
+    },
+    "activities_completed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "type"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "type": {
+            "type": "string",
+            "enum": ["conversation", "writing", "vocabulary_reading", "daily_plan", "placement_test", "progress_test"]
+          },
+          "score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+          "topic": { "type": "string" },
+          "words_learned": { "type": "array", "items": { "type": "string" } },
+          "review_date": { "type": ["string", "null"], "format": "date" },
+          "content_found": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "enum": ["podcast", "video", "article"] },
+                "title": { "type": "string" },
+                "url": { "type": "string", "format": "uri" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "level_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "from", "to", "reason"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "from": { "type": ["string", "null"], "enum": ["A1", "A2", "B1", "B2", "C1", "C2", null] },
+          "to": { "type": "string", "enum": ["A1", "A2", "B1", "B2", "C1", "C2"] },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "agent": { "type": "string" },
+          "content": { "type": "string" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "skillStats": {
+      "type": "object",
+      "properties": {
+        "sessions": { "type": "integer", "minimum": 0 },
+        "last_session": { "type": ["string", "null"], "format": "date" },
+        "avg_score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 }
+      }
+    }
+  }
+}

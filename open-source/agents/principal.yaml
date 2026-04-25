@@ -1,0 +1,75 @@
+name: principal
+version: "1.0.0"
+role: orchestrator
+description: >
+  Director and entry point of the English School agent team.
+  Reads student state, interprets intent, and routes to the correct agent or skill.
+  Never teaches directly — always delegates to Professor or skill runners.
+
+system_prompt: prompts/principal.md
+
+model_requirements:
+  min_context_tokens: 8000
+  reasoning: optional
+  tools_required:
+    - file_read        # reads progress.json
+    - file_write       # creates progress.json if missing
+
+memory:
+  type: file
+  path: progress.json
+  schema: schemas/progress.schema.json
+  read_on_startup: true
+
+routing_rules:
+  - condition: "progress.json does not exist OR current_level is null"
+    action: invoke_skill
+    target: placement-test
+    reason: "New student — must complete placement before anything else"
+
+  - condition: "student mentions: prova mensal, progress test, monthly test, avaliação"
+    action: invoke_skill
+    target: progress-test
+
+  - condition: "student mentions: conversa, speaking, falar, role-play, conversation"
+    action: invoke_agent
+    target: professor
+    context:
+      focus: conversation
+
+  - condition: "student mentions: escrita, writing, escrever, write, e-mail, texto"
+    action: invoke_agent
+    target: professor
+    context:
+      focus: writing
+
+  - condition: "student mentions: vocabulário, vocabulary, leitura, reading, palavras"
+    action: invoke_agent
+    target: professor
+    context:
+      focus: vocabulary_reading
+
+  - condition: "student mentions: progresso, progress, nível, level, nota, score, evolução"
+    action: invoke_agent
+    target: supervisor
+
+  - condition: "student mentions: para-casa, homework, atividades, conteúdo, podcast, vídeo, série"
+    action: invoke_skill
+    target: daily-activities
+
+  - condition: "no specific intent detected"
+    action: suggest_options
+    options:
+      - placement-test
+      - conversation
+      - writing
+      - vocabulary-reading
+      - daily-activities
+      - progress-report
+
+session_behavior:
+  on_start:
+    - read_progress_file
+    - greet_with_level_and_suggestion
+    - warn_if_progress_test_due_within_days: 3
+  language: bilingual_adaptive   # PT-BR for guidance, EN for exercises

@@ -1,0 +1,94 @@
+name: vocabulary-reading
+version: "1.0.0"
+description: >
+  Vocabulary expansion with spaced repetition + reading comprehension session.
+  Words are always presented in context (never as isolated lists).
+  Texts are calibrated to the student's CEFR level.
+
+trigger_phrases:
+  - "vocabulary"
+  - "vocabulário"
+  - "reading"
+  - "leitura"
+  - "aprender palavras"
+  - "ler em inglês"
+  - "texto em inglês"
+  - "new words"
+
+tools_required:
+  - file_read
+  - file_write
+
+prompt_file: prompts/skills/vocabulary-reading.md
+
+structure:
+  parts:
+    - id: spaced_repetition_review
+      description: "Review words due from progress.json (review_date <= today)"
+      minutes: 5
+      format: flashcard
+
+    - id: new_vocabulary
+      description: "5-8 new words presented in context"
+      minutes: 10
+      word_count_range: [5, 8]
+      presentation_format:
+        fields:
+          - word
+          - phonetic_transcription
+          - part_of_speech
+          - meaning_in_portuguese
+          - example_sentence
+          - related_words
+          - common_mistake_by_portuguese_speakers
+
+    - id: reading_text
+      description: "Short text at student's CEFR level using new vocabulary"
+      minutes: 10
+      text_length_by_level:
+        A1: "50-80 words"
+        A2: "80-150 words"
+        B1: "150-250 words"
+        B2: "250-400 words"
+        C1: "400-600 words"
+        C2: "600+ words (authentic)"
+
+    - id: comprehension
+      description: "3-5 comprehension questions"
+      minutes: 5
+      question_types_by_level:
+        A1_A2: "yes/no and single-word answers"
+        B1_B2: "open questions about main idea"
+        C1_C2: "inference and tone analysis"
+
+    - id: active_practice
+      description: "Student writes sentences using new words"
+      minutes: 5
+      sentence_count: 3
+
+spaced_repetition:
+  schedule:
+    first_review: 3    # days after learning
+    second_review: 7
+    third_review: 21
+    long_term: 60
+
+themes_by_level:
+  A1: ["colors", "family", "numbers", "days", "food", "body", "home"]
+  A2: ["work basics", "travel", "shopping", "health", "free time"]
+  B1: ["technology", "environment", "relationships", "work life"]
+  B2: ["business", "news", "psychology", "culture", "debate"]
+  C1: ["politics", "economics", "philosophy", "science", "media"]
+  C2: ["any specialized domain"]
+
+scoring:
+  comprehension: 50
+  active_use: 50
+  total: 100
+
+outputs:
+  - updates_progress_json: true
+  - notifies_supervisor: true
+  - fields_written:
+      - skill_sessions.vocabulary_reading
+      - activities_completed   # includes words_learned and review_date

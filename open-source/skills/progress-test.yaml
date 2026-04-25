@@ -1,0 +1,63 @@
+name: progress-test
+version: "1.0.0"
+description: >
+  Monthly progress assessment adapted to the student's current CEFR level.
+  Compares with previous tests and triggers Supervisor's level decision.
+
+trigger_phrases:
+  - "progress test"
+  - "prova mensal"
+  - "avaliação mensal"
+  - "quero ser avaliado"
+  - "testar meu nível"
+  - "evolução"
+
+tools_required:
+  - file_read
+  - file_write
+
+prompt_file: prompts/skills/progress-test.md
+
+pre_conditions:
+  - read_current_level_from_progress_json
+  - check_next_progress_test_date
+  - warn_if_too_early: true   # warn but allow student to proceed early
+
+structure:
+  parts:
+    - id: vocabulary_grammar
+      name: "Vocabulary & Grammar"
+      max_score: 30
+      question_count: 10
+      distribution_rule: "6 questions at current level + 4 at next level"
+
+    - id: writing
+      name: "Writing"
+      max_score: 30
+      exercises: 1
+      task_selection: "by_current_level"
+      rubric_criteria:
+        - vocabulary_complexity: 10
+        - grammar_accuracy: 10
+        - coherence_organization: 10
+
+    - id: conversation
+      name: "Conversation"
+      max_score: 40
+      rubric_criteria:
+        - fluency: 10
+        - vocabulary: 10
+        - grammar: 10
+        - idea_complexity: 10
+
+post_test:
+  show_comparative_result: true    # current vs previous test
+  invoke_supervisor: true          # Supervisor applies advancement rules
+  update_next_test_date: true      # next_progress_test = today + 30 days
+
+outputs:
+  - updates_progress_json: true
+  - fields_written:
+      - last_progress_test
+      - next_progress_test
+      - scores.progress_tests    # appends new entry

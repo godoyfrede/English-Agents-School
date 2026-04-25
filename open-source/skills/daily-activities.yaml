@@ -1,0 +1,92 @@
+name: daily-activities
+version: "1.0.0"
+description: >
+  Generates a personalized weekly homework plan with real content found via web search.
+  Each day includes a specific podcast episode, YouTube video, or article with a direct
+  link, duration, and micro-task. Adapted to student's CEFR level and daily schedule.
+
+trigger_phrases:
+  - "para-casa"
+  - "homework"
+  - "atividades"
+  - "daily activities"
+  - "o que assistir em inglês"
+  - "podcast de inglês"
+  - "conteúdo em inglês"
+  - "aprender no dia a dia"
+  - "o que ler hoje"
+  - "plano semanal"
+
+tools_required:
+  - file_read
+  - file_write
+  - web_search      # REQUIRED: finds real, current content
+  - web_fetch       # REQUIRED: fetches episode/article details
+
+prompt_file: prompts/skills/daily-activities.md
+
+web_search_strategy:
+  podcast:
+    A1_A2:
+      - query: "BBC Learning English podcast latest episode 2025"
+      - query: "Culips ESL podcast latest episode"
+    B1:
+      - query: "BBC 6 Minute English latest episode site:bbc.co.uk"
+      - query: '"The English We Speak" BBC latest 2025'
+    B2:
+      - query: "NPR Up First latest episode"
+      - query: "How I Built This latest episode"
+    C1:
+      - query: "The Daily NYT podcast latest episode"
+      - query: "Freakonomics latest episode"
+    C2:
+      - query: "Lex Fridman podcast latest episode"
+
+  video:
+    A1_A2:
+      - query: "English with Lucy latest video 2025 youtube"
+    B1:
+      - query: "BBC Learning English 6 minute english latest youtube"
+    B2:
+      - query: "TED Talk english subtitles {student_interest} 2025"
+    C1:
+      - query: "Kurzgesagt latest video 2025"
+    C2:
+      - query: "Last Week Tonight latest episode"
+
+  article:
+    A1_A2:
+      - query: "BBC Learning English news report today 2025"
+    B1:
+      - query: "BBC News simple english article today"
+    B2:
+      - query: "The Economist article {student_interest} 2025"
+    C1:
+      - query: "The Atlantic article {student_interest} 2025"
+
+content_delivery_format:
+  required_fields:
+    - exact_title
+    - direct_url
+    - duration_or_read_time
+    - why_good_for_level    # 1 sentence
+    - micro_task            # specific instruction
+
+weekly_plan_structure:
+  days:
+    monday: vocabulary_and_reading
+    tuesday: listening
+    wednesday: active_speaking_or_writing
+    thursday: video
+    friday: writing_review
+    saturday: light_immersion
+    sunday: optional_flash_activity_2min
+
+flash_activity:
+  duration_minutes: 2
+  task: "Write 3 sentences in English describing what you are doing right now."
+
+outputs:
+  - updates_progress_json: true
+  - fields_written:
+      - activities_completed   # includes content_found with URLs

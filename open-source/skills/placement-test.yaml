@@ -1,0 +1,73 @@
+name: placement-test
+version: "1.0.0"
+description: >
+  Initial CEFR placement test covering vocabulary/comprehension, writing, and conversation.
+  Determines student level from A1 to C2. Creates or initializes progress.json.
+
+trigger_phrases:
+  - "placement test"
+  - "prova inicial"
+  - "teste de nível"
+  - "qual é meu nível"
+  - "começar do zero"
+  - "novo aluno"
+  - "nivelamento"
+
+tools_required:
+  - file_read
+  - file_write
+
+prompt_file: prompts/skills/placement-test.md
+
+structure:
+  parts:
+    - id: vocabulary_comprehension
+      name: "Vocabulary & Comprehension"
+      max_score: 30
+      question_count: 10
+      question_distribution:
+        A1: 2
+        A2: 2
+        B1: 2
+        B2: 2
+        C1: 2
+      scoring:
+        Q1_Q4: 2   # 2 pts each
+        Q5_Q8: 3   # 3 pts each
+        Q9_Q10: 5  # 5 pts each
+
+    - id: writing
+      name: "Writing"
+      max_score: 40
+      exercises: 2
+      rubric_criteria:
+        - vocabulary: 5
+        - grammar: 5
+        - coherence: 5
+        - complexity: 5
+
+    - id: conversation
+      name: "Conversation"
+      max_score: 30
+      rubric_criteria:
+        - fluency: 10
+        - vocabulary: 10
+        - grammar: 10
+
+level_determination:
+  score_bands:
+    A1: [0, 15]
+    A2: [16, 30]
+    B1: [31, 50]
+    B2: [51, 70]
+    C1: [71, 85]
+    C2: [86, 100]
+
+outputs:
+  - updates_progress_json: true
+  - fields_written:
+      - current_level
+      - placement_date
+      - next_progress_test   # placement_date + 30 days
+      - scores.placement
+      - level_history        # first entry

@@ -1,0 +1,66 @@
+name: supervisor
+version: "1.0.0"
+role: memory_manager
+description: >
+  Guardian of student memory and academic progress.
+  Records all scores, maintains progress.json, and applies level-advancement criteria.
+  Never teaches — only evaluates, records, and decides on level changes.
+
+system_prompt: prompts/supervisor.md
+
+model_requirements:
+  min_context_tokens: 4000
+  reasoning: optional
+  tools_required:
+    - file_read        # reads progress.json
+    - file_write       # updates progress.json
+
+memory:
+  type: file
+  path: progress.json
+  schema: schemas/progress.schema.json
+  read_on_startup: true
+  write_on_update: true
+
+level_advancement_rules:
+  advance:
+    condition: "score >= 80 for 2 consecutive progress tests at current level"
+    action: increment_cefr_level
+  maintain:
+    condition: "score >= 60 AND score < 80"
+    action: keep_current_level
+  review:
+    condition: "score >= 40 AND score < 60"
+    action: keep_current_level_and_flag_weak_skills
+  regress:
+    condition: "score < 40 for 2 consecutive progress tests"
+    action: decrement_cefr_level
+
+cefr_order:
+  - A1
+  - A2
+  - B1
+  - B2
+  - C1
+  - C2
+
+report_format:
+  sections:
+    - current_level
+    - days_since_placement
+    - next_progress_test
+    - score_history_chart
+    - skill_breakdown
+    - strengths
+    - areas_to_improve
+    - recent_activities
+    - recommendation
+
+responsibilities:
+  - Record scores after every evaluated session
+  - Register placement test results
+  - Register monthly progress test results
+  - Apply advancement rules and update level_history
+  - Set next_progress_test date (current_date + 30 days)
+  - Generate progress reports on demand
+  - Add coaching notes in student language (PT-BR)

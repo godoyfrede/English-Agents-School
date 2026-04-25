@@ -1,0 +1,88 @@
+name: writing-coach
+version: "1.0.0"
+description: >
+  Writing practice session with detailed structured feedback. Student writes a task
+  (V1), receives categorized corrections, rewrites (V2), and gets a comparative score.
+
+trigger_phrases:
+  - "writing"
+  - "escrita"
+  - "escrever em inglês"
+  - "corrigir meu texto"
+  - "praticar escrita"
+  - "writing practice"
+  - "writing coach"
+  - "coach de escrita"
+
+tools_required:
+  - file_read
+  - file_write
+
+prompt_file: prompts/skills/writing-coach.md
+
+task_types_by_level:
+  A1:
+    - personal_introduction
+    - short_message_3_sentences
+    - favorite_things_list
+  A2:
+    - informal_email_to_friend
+    - daily_routine_description
+    - rescheduling_message
+  B1:
+    - formal_email_simple
+    - opinion_paragraph_3_5_sentences
+    - place_description
+  B2:
+    - professional_complaint_email
+    - argumentative_paragraph
+    - article_summary
+  C1:
+    - full_opinion_essay
+    - professional_report
+    - formal_application_letter
+  C2:
+    - complex_argumentative_essay
+    - journalistic_text
+    - academic_analysis
+
+feedback_process:
+  steps:
+    - read_full_text_before_commenting
+    - show_corrected_version_with_markup
+    - explain_errors_by_category:
+        categories: [grammar, vocabulary, structure, recurring_errors]
+    - request_rewrite_v2
+    - compare_v1_vs_v2
+
+correction_markup:
+  remove: "~~strikethrough~~"
+  replace: "**[correction]**"
+  explain: "💡 [note]"
+
+scoring:
+  vocabulary: 25
+  grammar: 25
+  coherence: 25
+  task_completion: 25
+  total: 100
+
+common_errors_reference:
+  # Common mistakes by Portuguese speakers
+  - error: "I am with 25 years"
+    correct: "I am 25 years old"
+  - error: "She is married with him"
+    correct: "She is married to him"
+  - error: "I have hunger"
+    correct: "I am hungry"
+  - error: "The people is"
+    correct: "The people are"
+  - error: "Actually"
+    note: "False cognate — means 'na verdade', not 'atualmente'"
+
+outputs:
+  - updates_progress_json: true
+  - notifies_supervisor: true
+  - fields_written:
+      - skill_sessions.writing
+      - activities_completed

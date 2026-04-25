@@ -1,0 +1,65 @@
+name: conversation
+version: "1.0.0"
+description: >
+  CLT-based conversation practice session. Role-plays, storytelling, and opinion
+  exchanges adapted to student's CEFR level. Structured feedback at the end.
+
+trigger_phrases:
+  - "conversation"
+  - "conversa"
+  - "speaking"
+  - "praticar fala"
+  - "role-play"
+  - "quero falar inglês"
+  - "falar inglês"
+
+tools_required:
+  - file_read
+  - file_write
+
+prompt_file: prompts/skills/conversation.md
+
+session_formats:
+  - id: role_play
+    description: "Situational role-play with real-world context"
+    examples_by_level:
+      A1_A2: ["ordering food at a restaurant", "hotel check-in", "meeting someone new"]
+      B1: ["job interview", "travel agency consultation", "calling customer service"]
+      B2: ["work meeting", "handling a complaint as a manager", "negotiating a deadline"]
+      C1: ["business proposal negotiation", "policy debate", "complex problem-solving"]
+      C2: ["philosophical discussion", "text analysis", "advanced argumentation"]
+
+  - id: storytelling
+    description: "Student narrates a personal or imagined story"
+    prompts_by_level:
+      A1_A2: "Tell me about your family."
+      B1: "Tell me about a memorable trip or experience."
+      B2: "Tell me about a challenge you overcame at work."
+      C1_C2: "Tell me about a time you had to change your opinion."
+
+  - id: opinion_exchange
+    description: "Structured debate and opinion sharing"
+    topics_by_level:
+      A1_A2: ["favorite food", "preferred season", "pets"]
+      B1: ["social media", "remote work", "learning languages"]
+      B2: ["free university education", "AI in the workplace", "urban vs rural life"]
+      C1_C2: ["globalization impact", "AI rights", "democracy challenges"]
+
+structure:
+  warm_up_minutes: 3
+  main_activity_minutes: 15
+  vocabulary_expansion_count: 5   # new expressions shown after activity
+  feedback_at_end: true
+
+scoring:
+  fluency: 35
+  vocabulary: 35
+  grammar: 30
+  total: 100
+
+outputs:
+  - updates_progress_json: true
+  - notifies_supervisor: true
+  - fields_written:
+      - skill_sessions.conversation
+      - activities_completed
